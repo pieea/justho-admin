@@ -10,8 +10,9 @@ var bodyParser = require('body-parser');
 const redis = require('redis');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const redisClient = redis.createClient(6379, 'localhost');
-const fixation = require('express-session-fixation');
+const redisClient = redis.createClient(61149, 'ec2-34-232-179-152.compute-1.amazonaws.com');
+redisClient.auth("p39bd352fd76b783d2d7c31a1f68297dcf6094b36ebd0d81c581c0ae852ac5eaa");
+// const fixation = require('express-session-fixation');
 
 // 인증
 const mustBe = require('mustbe');
@@ -21,6 +22,7 @@ mustBe.configure(mustBeConfig);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var campaign = require('./routes/campaign');
 
 var app = express();
 
@@ -45,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/upload', upload.fileHandler());
+app.use('/campaign', campaign);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

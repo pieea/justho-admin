@@ -14,68 +14,42 @@
 </head>
 <body>
 <div class="bd-pageheader">
-    <div class="container">
-    <h1>JustHo Admin</h1>
-    <br>
-    <blockquote>
-        운영툴 테스트 페이지 입니다.
-    </blockquote>
-    <br>
-    <div class="">
-        <div class="form-group row">
-            <label for="example-text-input" class="col-2 col-form-label">제목</label>
-            <div class="col-10">
-                <input class="form-control" type="text" value="" name="TITLE" placeholder="제목을 입력해 주세요(필수)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="example-search-input" class="col-2 col-form-label">설명</label>
-            <div class="col-10">
-                <input class="form-control" type="search" value="" name="DESCRIPTION" placeholder="설명을 입력해 주세요">
+    <form class="container" method="POST">
+        <h1>JustHo Admin</h1>
+        <br>
+        <blockquote>
+            운영툴 테스트 페이지 입니다.
+        </blockquote>
+        <br>
+
+        <div class="w3-padding w3-white notranslate">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Mainimage</th>
+                        <th>title</th>
+                        <th>description</th>
+                        <th>action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% campaigns.forEach(function(item){ %>
+                    <tr>
+                        <td><%- item.ID %></td>
+                        <td><img height="100px" src="<%- item.MAINIMAGE %>"></td>
+                        <td><%- item.TITLE %></td>
+                        <td><%- item.DESCRIPTION %></td>
+                        <td><button type='button' onclick="location.href='/campaign/<%- item.ID %>'" class="btn btn-outline-primary">수정</button> <button class="btn btn-outline-danger">삭제</button></td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="example-search-input" class="col-2 col-form-label">메인 이미지</label>
-            <div class="col-10">
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Select file...</span>
-                    <input id="mainimage-fileupload" type="file" name="mainimages" accept="image/*">
-                </span>
-                <br>
-                <br>
-                <div id="mainimage-progress" class="progress">
-                    <div class="progress-bar progress-bar-success"></div>
-                </div>
-                <div id="mainimage-files" class="files"></div>
-                <br>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="example-search-input" class="col-2 col-form-label">상세 이미지</label>
-            <div class="col-10">
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Select files...</span>
-                    <input id="detailimages-fileupload" type="file" name="detailimages[]" accept="image/*" multiple>
-                </span>
-                <br>
-                <br>
-                <div id="detailimages-progress" class="progress">
-                    <div class="progress-bar progress-bar-success"></div>
-                </div>
-                <div id="detailimages-files" class="files"></div>
-                <br>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="example-email-input" class="col-2 col-form-label">금액설정</label>
-            <div class="col-10">
-                <input class="form-control" type="number" value="" name="price" placeholder="금액을 입력해 주세요">
-            </div>
-        </div>
-    </div>
+    </form>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">test</h3>
@@ -87,62 +61,6 @@
 <script src="/javascripts/jquery/jquery.iframe-transport.js"></script>
 <script src="/javascripts/jquery/jquery.fileupload.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script>
-    $(function () {
-        'use strict';
-        var url = '/upload';
-        $('#mainimage-fileupload').fileupload({
-            url: url,
-            dataType: 'json',
-            done: function (e, data) {
-                $('#mainimage-files').empty();
-                    $('<img/>').attr('src', '/uploads/' + file.name).attr('width', '200px').appendTo('#mainimage-files');
-                });
-
-                $("#mainimage-fileupload").attr('value', data.result.files[0].name);
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#mainimage-progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            },
-            start: function (e, data) {
-                $('#mainimage-files').empty();
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-        $('#detailimages-fileupload').fileupload({
-            url: url,
-            dataType: 'json',
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    $('<img/>').attr('src', '/uploads/' + file.name).attr('width', '200px').appendTo('#detailimages-files');
-                });
-
-                var filenames = data.result.files.reduce(function(a, b){
-                    return a + "|" + b.name;
-                }, "");
-
-                $("#detailimages-fileupload").attr('value', filenames);
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#detailimages-progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            },
-            start: function (e, data) {
-                $('#detailimages-files').empty();
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-    });
-</script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 </body>
 </html>

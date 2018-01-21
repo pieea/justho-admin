@@ -31,12 +31,11 @@ router.post("/login", function(req, res, next){
             res.redirect('/users/login');
         } else {
             if (user) {
-                req.session.regenerate(function(err) {
-                    req.session.key = username;
-                    res.redirect(prev);
-                });
+                // req.session.regenerate(function(err) {
+                //     req.session.key = username;
+                //     res.redirect(prev);
+                // });
             } else {
-
             }
         }
 
