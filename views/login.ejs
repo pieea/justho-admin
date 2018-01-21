@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+    <head>
+        <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+        <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+        <meta charset="utf-8">
+        <title>JustHo Admin</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link rel="stylesheet" href="/stylesheets/jquery/jquery.fileupload.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+
+        <style>
+            html {
+                background: url(/images/c9c191f226c643eabcce6debfe76049d.jpg) no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .jumbotron {
+                text-align: center;
+                width: 22rem;
+                border-radius: 0.5rem;
+                top: 15%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: 4rem auto;
+                background-color: #fff;
+                padding: 2rem;
+                max-height: 420px;
+            }
+
+            .container .glyphicon-signal {
+                font-size: 10rem;
+                margin-top: 2rem;
+                color: #f96145;
+                margin-bottom: 2rem;
+            }
+
+            input {
+                width: 100%;
+                margin-bottom: 1.4rem;
+                padding: 1rem;
+                background-color: #ecf2f4;
+                border-radius: 0.2rem;
+                border: none;
+            }
+            h2 {
+                margin-bottom: 2px;
+                font-weight: bold;
+                color: #ababab;
+            }
+            .btn {
+                border-radius: 0.2rem;
+            }
+            .btn .glyphicon {
+                font-size: 3rem;
+                color: #fff;
+            }
+            .full-width {
+                background-color: #8eb5e2;
+                width: 100%;
+                -webkit-border-top-right-radius: 0;
+                -webkit-border-bottom-right-radius: 0;
+                -moz-border-radius-topright: 0;
+                -moz-border-radius-bottomright: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .box {
+                padding-top: 30px;
+                bottom: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="jumbotron">
+        <div class="container">
+            <h2>JustHo Admin</h2>
+            <h5>캠페인 운영툴입니다</h5>
+            <div class="box">
+                <form action="/users/login" method="POST">
+                    <input name="username" type="text" placeholder="username" value="">
+                    <input name="password" type="password" placeholder="password" value="">
+                    <input name="prev" type="hidden" value="/">
+                    <button type="submit" class="btn btn-default full-width"><span class="glyphicon glyphicon-ok">OK</span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

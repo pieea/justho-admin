@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html lang="utf-8">
+<head>
+    <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+    <meta charset="utf-8">
+    <title>JustHo Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/jquery/jquery.fileupload.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+</head>
+<body>
+<div class="bd-pageheader">
+    <div class="container">
+    <h1>JustHo Admin</h1>
+    <br>
+    <blockquote>
+        운영툴 테스트 페이지 입니다.
+    </blockquote>
+    <br>
+    <div class="">
+        <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">제목</label>
+            <div class="col-10">
+                <input class="form-control" type="text" value="" name="TITLE" placeholder="제목을 입력해 주세요(필수)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-search-input" class="col-2 col-form-label">설명</label>
+            <div class="col-10">
+                <input class="form-control" type="search" value="" name="DESCRIPTION" placeholder="설명을 입력해 주세요">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-search-input" class="col-2 col-form-label">메인 이미지</label>
+            <div class="col-10">
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Select file...</span>
+                    <input id="mainimage-fileupload" type="file" name="mainimages" accept="image/*">
+                </span>
+                <br>
+                <br>
+                <div id="mainimage-progress" class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                </div>
+                <div id="mainimage-files" class="files"></div>
+                <br>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-search-input" class="col-2 col-form-label">상세 이미지</label>
+            <div class="col-10">
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Select files...</span>
+                    <input id="detailimages-fileupload" type="file" name="detailimages[]" accept="image/*" multiple>
+                </span>
+                <br>
+                <br>
+                <div id="detailimages-progress" class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                </div>
+                <div id="detailimages-files" class="files"></div>
+                <br>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-email-input" class="col-2 col-form-label">금액설정</label>
+            <div class="col-10">
+                <input class="form-control" type="number" value="" name="price" placeholder="금액을 입력해 주세요">
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">test</h3>
+        </div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/javascripts/jquery/vendor/jquery.ui.widget.js"></script>
+<script src="/javascripts/jquery/jquery.iframe-transport.js"></script>
+<script src="/javascripts/jquery/jquery.fileupload.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        'use strict';
+        var url = '/upload';
+        $('#mainimage-fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+                $('#mainimage-files').empty();
+                    $('<img/>').attr('src', '/uploads/' + file.name).attr('width', '200px').appendTo('#mainimage-files');
+                });
+
+                $("#mainimage-fileupload").attr('value', data.result.files[0].name);
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#mainimage-progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            start: function (e, data) {
+                $('#mainimage-files').empty();
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        $('#detailimages-fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<img/>').attr('src', '/uploads/' + file.name).attr('width', '200px').appendTo('#detailimages-files');
+                });
+
+                var filenames = data.result.files.reduce(function(a, b){
+                    return a + "|" + b.name;
+                }, "");
+
+                $("#detailimages-fileupload").attr('value', filenames);
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#detailimages-progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            start: function (e, data) {
+                $('#detailimages-files').empty();
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    });
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+</body>
+</html>
