@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+var partials = require('express-partials');
 
 const redis = require('redis');
 const session = require('express-session');
@@ -16,8 +17,6 @@ const fixation = require('express-session-fixation');
 
 var app = express();
 app.use(fixation());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride());
 
 const sessionStore = new RedisStore({
@@ -67,6 +66,7 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(partials());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
