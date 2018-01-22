@@ -5,14 +5,44 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+const methodOverride = require('method-override');
 
 const redis = require('redis');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const redisClient = redis.createClient(61149, 'ec2-34-232-179-152.compute-1.amazonaws.com');
 redisClient.auth("p39bd352fd76b783d2d7c31a1f68297dcf6094b36ebd0d81c581c0ae852ac5eaa");
-// const fixation = require('express-session-fixation');
+const fixation = require('express-session-fixation');
+
+var app = express();
+app.use(fixation());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride());
+
+const sessionStore = new RedisStore({
+  client: redisClient,
+  prefix: 'session:',
+  db: 0,
+  ttl: 600
+});
+
+app.use(session({
+  secret: 'admin',
+  store: sessionStore,
+  // cookie: { secure: true },
+  // cookie: { maxAge: 60000 },
+  saveUninitialized: true,
+  resave: false
+}));
+
+redisClient.on('error', (err) => {
+  console.log('could not connect ', err);
+});
+
+redisClient.on('connect', () => {
+  console.log('redis connected');
+});
 
 // 인증
 const mustBe = require('mustbe');
@@ -23,8 +53,6 @@ mustBe.configure(mustBeConfig);
 var index = require('./routes/index');
 var users = require('./routes/users');
 var campaign = require('./routes/campaign');
-
-var app = express();
 
 // configure upload middleware
 upload.configure({
@@ -65,30 +93,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-const sessionStore = new RedisStore({
-    client: redisClient,
-    prefix: 'session:',
-    db: 0,
-    ttl: 600
-});
-
-app.use(session({
-    secret: 'admin',
-    store: sessionStore,
-    // cookie: { secure: true },
-    // cookie: { maxAge: 60000 },
-    saveUninitialized: true,
-    resave: false
-}));
-
-redisClient.on('error', (err) => {
-    console.log('could not connect ', err);
-});
-
-redisClient.on('connect', () => {
-    console.log('redis connected');
 });
 
 module.exports = app;

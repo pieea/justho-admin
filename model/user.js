@@ -33,7 +33,6 @@ User.loginFromCookie = function(req, cookie, cb){
 };
 
 User.loginFromSession = function(req, session, cb){
-
     var user;
     if (session) {
         var username = session;

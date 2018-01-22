@@ -14,50 +14,6 @@ const fields = [
     'PRICE'
 ];
 
-const fullFields = fields.concat([
-    'REGDTTM',
-    'MODDTTM',
-    'STATUS'
-]);
-
-router.get('/list', function (req, res, next) {
-    var model = {title: '책 정보 수정', id: req.query.campaignid, compaign: {}};
-
-    const compaignFn = (message) => new Promise((resolve)=> {
-        const query = `SELECT ${fullFields} FROM campaigns`;
-
-        db.connection.query(query, [],
-            async function (err, result) {
-            if (err) {
-                console.error(err.message);
-                return;
-            }
-
-            if (result.length > 0) {
-                // var resultList = result.reduce(function (a, b) {
-                //     let index = 0;
-                //     var resultMap = fullFields.reduce(function (x, y) {
-                //         x[y] = b[index++];
-                //         return x;
-                //     }, {});
-                //
-                //     a.push(resultMap);
-                //     return a;
-                // }, []);
-
-                model["campaigns"] = result;
-                resolve();
-            }
-        });
-    });
-
-    (async function() {
-        await compaignFn();
-    })().then(() => {
-        res.render('index', model);
-    });
-});
-
 router.get('/:campaignid', function (req, res, next) {
     var model = {title: '캠페인 수정', id: req.params.campaignid, compaign: {}};
 
@@ -89,8 +45,7 @@ router.get('/:campaignid', function (req, res, next) {
             await compaignFn();
         })().then(() => {
             res.render('campaign', model);
-        });
-    } else {
+        })
         res.render('campaign', model);
     }
 });
@@ -125,7 +80,7 @@ router.post('/modify', function (req, res, next) {
     (async function() {
         const err = await compaignFn();
         if(!err) {
-            res.redirect("/compaign/list")
+            res.redirect("/")
         } else {
             res.status(500).send(err.message)
         }
@@ -159,7 +114,7 @@ router.post('/create', function (req, res, next) {
         const err = await compaignFn();
 
         if(!err) {
-            res.redirect("/compaign/list")
+            res.redirect("/")
         } else {
             res.status(500).send(err.message)
         }
@@ -175,7 +130,7 @@ router.post('/delete', function (req, res, next) {
             if(err) {
                 res.status(500).send(err.message)
             } else {
-                res.redirect("/compaign/list")
+                res.redirect("/")
             }
         });
 });

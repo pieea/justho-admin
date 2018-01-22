@@ -13,54 +13,54 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
 </head>
 <body>
-<div class="bd-pageheader">
-    <form class="container" method="POST">
-        <h1>JustHo Admin</h1>
-        <br>
-        <blockquote>
-            운영툴 테스트 페이지 입니다.
-        </blockquote>
-        <br>
+    <div class="bd-pageheader">
+        <form class="container" method="POST">
+            <h1>JustHo Admin</h1>
+            <br>
+            <blockquote>
+                운영툴 테스트 페이지 입니다.
+            </blockquote>
+            <br>
 
-        <div class="w3-padding w3-white notranslate">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Mainimage</th>
-                        <th>title</th>
-                        <th>description</th>
-                        <th>action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% campaigns.forEach(function(item){ %>
-                    <tr>
-                        <td><%- item.ID %></td>
-                        <td><img height="100px" src="<%- item.MAINIMAGE %>"></td>
-                        <td><%- item.TITLE %></td>
-                        <td><%- item.DESCRIPTION %></td>
-                        <td><button type='button' onclick="location.href='/campaign/<%- item.ID %>'" class="btn btn-outline-primary">수정</button> <button class="btn btn-outline-danger">삭제</button></td>
-                    </tr>
-                    <% }); %>
-                    </tbody>
-                </table>
+            <div class="w3-padding w3-white notranslate">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Mainimage</th>
+                            <th>title</th>
+                            <th>description</th>
+                            <th>action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% campaigns.forEach(function(item){ %>
+                        <tr>
+                            <td><%- item.ID %></td>
+                            <td><img height="100px" src="<%- item.MAINIMAGE %>"></td>
+                            <td><%- item.TITLE %></td>
+                            <td><%- item.DESCRIPTION %></td>
+                            <td><button type='button' onclick="location.href='/campaign/<%- item.ID %>'" class="btn btn-outline-primary">수정</button> <button class="btn btn-outline-danger">삭제</button></td>
+                        </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">test</h3>
             </div>
         </div>
-
-    </form>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">test</h3>
-        </div>
     </div>
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="/javascripts/jquery/vendor/jquery.ui.widget.js"></script>
-<script src="/javascripts/jquery/jquery.iframe-transport.js"></script>
-<script src="/javascripts/jquery/jquery.fileupload.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/javascripts/jquery/vendor/jquery.ui.widget.js"></script>
+    <script src="/javascripts/jquery/jquery.iframe-transport.js"></script>
+    <script src="/javascripts/jquery/jquery.fileupload.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 </body>
 </html>

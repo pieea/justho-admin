@@ -4,7 +4,6 @@ var router = express.Router();
 
 router.get("/login", function(req, res, next){
     req.query.prev = req.query.prev || "/";
-
     var ip = req.connection.remoteAddress;
 
     res.render("login", {prev: req.query.prev, ip: ip});
@@ -31,10 +30,10 @@ router.post("/login", function(req, res, next){
             res.redirect('/users/login');
         } else {
             if (user) {
-                // req.session.regenerate(function(err) {
-                //     req.session.key = username;
-                //     res.redirect(prev);
-                // });
+                req.session.regenerate(function(err) {
+                    req.session.key = username;
+                    res.redirect(prev);
+                });
             } else {
             }
         }
