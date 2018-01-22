@@ -3,23 +3,12 @@ var router = express.Router();
 
 var db = require('../db');
 
-let rowCount = 0;
-
-const fields = [
-    'ID',
-    'TITLE',
-    'DESCRIPTION',
-    'MAINIMAGE',
-    'DETAILIMAGES',
-    'PRICE'
-];
-
 router.get('/:campaignid([0-9]+)', function (req, res, next) {
     var model = {title: '캠페인 수정', id: req.params.campaignid, campaign: {}};
 
     if (req.params.campaignid) {
         const campaignFn = (message) => new Promise((resolve)=> {
-        const query = `SELECT ${fields} FROM campaigns WHERE id = '${req.params.campaignid}'`;
+        const query = `SELECT ${db.campaignsFields} FROM campaigns WHERE id = '${req.params.campaignid}'`;
 
         db.connection.query(query, [],
             async function (err, result) {
@@ -52,7 +41,7 @@ router.get('/:campaignid([0-9]+)', function (req, res, next) {
 
 router.post('/modify', function (req, res, next) {
     const campaignFn = (message) => new Promise((resolve)=> {
-        let setCommand = fields.reduce(function (x, y) {
+        let setCommand = db.campaignsFields.reduce(function (x, y) {
             if(req.body[y] !== undefined) {
                 x = x + (x === "" ? "" : ', ');
                 x = x + y + " = Q'[" + req.body[y] + "]'";
@@ -61,7 +50,8 @@ router.post('/modify', function (req, res, next) {
         }, "");
 
         if(setCommand) {
-            const query = `UPDATE campaigns SET ${setCommand}, MODDTTM = TO_CHAR(sysdate, 'YYYYMMDDHH24MISS') WHERE id = '${req.query.campaignid}'`;
+            const query = `UPDATE campaigns SET ${setCommand}, MODDTTM = TO_CHAR(sysdate, 'YYYYMMDDHH24MISS') 
+                            WHERE id = '${req.query.campaignid}'`;
 
             db.connection.query(query, [],
                 function (err, result) {
@@ -89,13 +79,13 @@ router.post('/modify', function (req, res, next) {
 
 router.post('/create', function (req, res, next) {
     const campaignFn = (message) => new Promise((resolve)=> {
-        let values = fields.reduce(function (x, y) {
+        let values = db.campaignsFields.reduce(function (x, y) {
             x = x + (x === "" ? "" : ', ');
             return req.body[y] === undefined ? (x + 'NULL') : (x + "'" + req.body[y] + "'");
         }, "");
 
         if(values) {
-            const query = `INSERT INTO campaigns(${fields}) VALUES (${values})`;
+            const query = `INSERT INTO campaigns(${db.campaignsFields}) VALUES (${values})`;
 
             db.connection.query(query, [],
                 function (err, result) {
@@ -123,14 +113,16 @@ router.post('/create', function (req, res, next) {
 
 
 router.get('/create', function (req, res, next) {
-  var model = {title: '캠페인 수정', id: req.params.campaignid, campaign: {}};
+  var model = {title: '캠페인 생성', id: req.params.campaignid, campaign: {}};
   res.render('campaign', model);
 });
 
 router.post('/delete', function (req, res, next) {
-    const query = `UPDATE campaigns SET STATUS = 'D', MODDTTM = TO_CHAR(sysdate, 'YYYYMMDDHH24MISS') WHERE id = '${req.body.campaignid}'` ;
+    const query = `UPDATE campaigns 
+                    SET STATUS = 'D', MODDTTM = now() 
+                    WHERE id = ${req.body.campaignid}` ;
 
-    db.connection.execute(query , [],
+    db.connection.query(query , [],
         function (err, result) {
             if(err) {
                 res.status(500).send(err.message)

@@ -4,26 +4,20 @@ const mustBe = require('mustbe').routeHelpers();
 
 var db = require('../db');
 
-const fields = [
-  'ID',
-  'TITLE',
-  'DESCRIPTION',
-  'MAINIMAGE',
-  'DETAILIMAGES',
-  'PRICE'
-];
-
-const fullFields = fields.concat([
+const fullFields = db.campaignsFields.concat([
   'REGDTTM',
   'MODDTTM',
   'STATUS'
 ]);
 
 router.get('/', mustBe.authenticated(), mustBe.authorized('admin'), function(req, res, next) {
-  var model = {title: '목록', id: req.query.campaignid, compaign: {}};
+  var model = {title: '목록', compaign: {}};
 
   const compaignFn = (message) => new Promise((resolve)=> {
-    const query = `SELECT ${fullFields} FROM campaigns`;
+    let query = `SELECT ${fullFields} FROM campaigns`
+    if(req.query.all !== 'Y') {
+      query += ' WHERE status = \'S\'';
+    }
 
     db.connection.query(query, [],
       async function (err, result) {

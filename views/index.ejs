@@ -6,16 +6,18 @@
     </blockquote>
     <br>
     <input type="hidden" id="campaignid" name="campaignid" />
+
     <div class="w3-padding w3-white notranslate">
+
         <div class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Mainimage</th>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>action</th>
+                    <th>Main Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,8 +28,12 @@
                     <td><%- item.TITLE %></td>
                     <td><%- item.DESCRIPTION %></td>
                     <td>
-                        <button type='button' onclick="location.href='/campaign/<%- item.ID %>'" class="btn btn-outline-primary">수정</button>
-                        <button data-delete-id="<%- item.ID %>" class="btn btn-outline-danger">삭제</button>
+                        <button type='button' onclick="location.href='/campaign/<%- item.ID %>'" class="btn btn-sm btn-outline-primary">수정</button>
+                        <% if(item.STATUS === 'S') { %>
+                        <button data-delete-id="<%- item.ID %>" class="btn btn-sm btn-outline-danger">삭제</button>
+                        <% } else { %>
+                        <button data-restore-id="<%- item.ID %>" class="btn btn-sm btn-outline-success">복구</button>
+                        <% } %>
                     </td>
                 </tr>
                 <% }); %>

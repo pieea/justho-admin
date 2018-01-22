@@ -13,6 +13,19 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
 </head>
 <body>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/">홈</a>
+                <a class="nav-item nav-link active" href="/campaign/create">생성</a>
+                <a class="nav-item nav-link" href="javascript:location.reload()">새로고침</a>
+                <a class="nav-item nav-link" href="/?all=Y">전체보기</a>
+            </div>
+        </div>
+    </nav>
     <%- body %>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/javascripts/util.js"></script>

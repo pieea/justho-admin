@@ -9,4 +9,14 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
+var campaignsFields = [
+  'ID',
+  'TITLE',
+  'DESCRIPTION',
+  'MAINIMAGE',
+  'DETAILIMAGES',
+  'PRICE'
+]
+
 exports.connection = connection;
+exports.campaignsFields = campaignsFields;

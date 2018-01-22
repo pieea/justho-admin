@@ -1,0 +1,71 @@
+html {
+    background: url(/images/c9c191f226c643eabcce6debfe76049d.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.jumbotron {
+    text-align: center;
+    width: 22rem;
+    border-radius: 0.5rem;
+    top: 15%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: 4rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    max-height: 380px;
+}
+
+.container .glyphicon-signal {
+    font-size: 10rem;
+    margin-top: 2rem;
+    color: #f96145;
+    margin-bottom: 2rem;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 1.4rem;
+    padding: 1rem;
+    background-color: #ecf2f4;
+    border-radius: 0.2rem;
+    border: none;
+}
+h2 {
+    margin-bottom: 2px;
+    font-weight: bold;
+    color: #ababab;
+}
+.btn {
+    border-radius: 0.2rem;
+}
+.btn .glyphicon {
+    font-size: 2rem;
+    color: #fff;
+}
+.full-width {
+    background-color: #8eb5e2;
+    width: 100%;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.box {
+    padding-top: 30px;
+    bottom: 0;
+    left: 0;
+}
